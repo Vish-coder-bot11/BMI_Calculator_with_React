@@ -22,30 +22,32 @@ function App() {
       return;
     }
 
-    const upHeight = height * 0.0254;
-    const bmi = weight / (upHeight * upHeight);
+    // ✅ Corrected logic: height is in cm, convert to meters
+    const heightInMeters = height / 100;
+    const bmi = weight / (heightInMeters * heightInMeters);
     setBmi(bmi.toFixed(1));
 
+    // ✅ Message + extra tip
     if (bmi < 18.5) {
-      setMessage('You are Underweight');
+      setMessage('You are Underweight — try to include more nutritious foods 🥗');
     } else if (bmi >= 18.5 && bmi < 25) {
-      setMessage('You are Normal')
+      setMessage('You are Normal — great job maintaining a healthy balance 💪');
     } else if (bmi >= 25 && bmi < 30) {
-      setMessage('You are Overweight')
+      setMessage('You are Overweight — consider regular exercise and a balanced diet 🚶‍♀️');
     } else {
-      setMessage('You are Obese')
+      setMessage('You are Obese — try consulting a doctor or nutritionist for guidance ❤️');
     }
-  }
+  };
 
   // Reload
   const reload = () => {
     window.location.reload();
-  }
+  };
 
   return (
     <div className="App">
       <div className="container">
-        <h2> BMI CALCULATOR</h2>
+        <h2>BMI CALCULATOR</h2>
         <form onSubmit={calcBmi}>
           <div>
             <label>Weight (Kgs)</label>
@@ -57,7 +59,8 @@ function App() {
             />
           </div>
           <div>
-            <label>Height (Inches)</label>
+            {/* ✅ Updated label to show height in cm */}
+            <label>Height (cms)</label>
             <input
               type="number"
               placeholder="Enter your height"
